@@ -1,0 +1,21 @@
+- id: '1613543347582'
+  alias: Thêm Tự động hóa
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: fe2a30952d5b4a85df7d72855e1f6a6c
+    entity_id: switch.43300007bcddc2678481_2
+    domain: switch
+  - platform: device
+    type: turned_off
+    device_id: a0347bde6d3aef4847ea5619b83eee25
+    entity_id: switch.43300007bcddc2678481_1
+    domain: switch
+  condition: []
+  action:
+  - type: turn_off
+    device_id: fe2a30952d5b4a85df7d72855e1f6a6c
+    entity_id: switch.43300007bcddc2678481_2
+    domain: switch
+  mode: single

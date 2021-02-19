@@ -1,0 +1,78 @@
+homeassistant:
+  external_url: "https://huyorchid.duckdns.org:8123"
+  internal_url: "http://ubuntu:8123"
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+frontend:
+  themes: !include_dir_merge_named Themes
+# Text to speechtts:
+tts:
+  - platform: google_translate
+    cache: true
+    cache_dir: ./tts
+    time_memory: 300
+    language: 'vi'
+
+####################################################
+#                                                  #
+#                   SPEEDTEST                      #
+#                                                  #
+####################################################
+
+# https://www.home-assistant.io/components/speedtestdotnet/
+speedtestdotnet:
+  server_id: 6085 # server "Telecom Italia S.p.A." Rome
+  scan_interval:
+    hours: 1
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+##############################################
+ifttt:
+  key: !secret ifttt_key
+mqtt:
+  broker: 192.168.31.150
+  port: 1883
+  username: hitpro
+  # password 
+  password: !secret mqtt_password    
+  # password
+  protocol: 3.1.1
+  discovery: true
+# Example tivi entry
+samsungtv:
+  - host: 192.168.31.77
+    turn_on_action:
+      - service: wake_on_lan.send_magic_packet
+        data:
+          mac: C0:48:E6:A4:5D:E8
+####################################################
+#                                                  #
+#                    Weather                       #
+#                                                  #
+####################################################
+
+#https://www.home-assistant.io/components/weather.darksky/
+weather:
+  - platform: darksky
+    api_key: !secret darksky
+ #   api_key: 4b697d80cce63d9143958d848b1158b5
+    mode: daily
+panel_iframe:
+  tasmoadmin:
+    title: TasmoAdmin
+    icon: mdi:lightbulb-on
+    url: http://huyorchid.duckdns.org:9541
+
+# Example configuration.yaml entry
+ssdp:
+wake_on_lan:
+shell_command:
+  pc: 'net rpc SHUTDOWN -f -I 192.168.31.69 -U QuangHuy%Admin123!@#'
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+switch: !include switchs.yaml
+
